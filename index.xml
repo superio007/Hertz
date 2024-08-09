@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_VehAvailRateRQ.xsd" Version="1.008" MaxResponses="2">
+	<POS>
+		<Source ISOCountry="AU" AgentDutyCode="T17R16L5D11">
+			<RequestorID Type="4" ID="X975">
+				<CompanyName Code="CP" CodeContext="4PH5"/>
+			</RequestorID>
+		</Source>
+		<Source>
+			<RequestorID Type="5" ID="00397316"/>
+		</Source>
+	</POS>
+	<VehAvailRQCore Status="All">
+		<VehRentalCore PickUpDateTime="2024-08-15T15:45:00" ReturnDateTime="2024-08-18T13:30:00">
+			<PickUpLocation LocationCode="MEL" Type="IATA" />
+			<ReturnLocation LocationCode="SYD" Type="IATA" />
+		</VehRentalCore>
+		</VehAvailRQCore>
+	</OTA_VehAvailRateRQ>
