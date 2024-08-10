@@ -69,6 +69,7 @@
         error_reporting(E_ALL);
             $code = "Add a Discount Code";
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['search_btn'])) {
+                // Capture form data
                 $dropType = $_POST['drop-Type'];
                 $Pickup = $_POST['Pick-up'];
                 $PickDate = $_POST['Pick-Date'];
@@ -76,49 +77,70 @@
                 $DropDate = $_POST['Drop-Date'];
                 $DropTime = $_POST['Drop-Time'];
 
+                // Function to convert 12-hour time to 24-hour format
                 function convertTo24HourFormat($time12Hour) {
                     $date = DateTime::createFromFormat('h:i A', $time12Hour);
                     return $date->format('H:i:s');
                 }
 
+                // Function to convert date format
                 function convertDateFormat($date, $fromFormat, $toFormat) {
                     $dateTime = DateTime::createFromFormat($fromFormat, $date);
                     return $dateTime->format($toFormat);
                 }
 
+                // Convert the date formats
                 $fromFormat = 'm/d/Y'; // Original format
                 $toFormat = 'Y-m-d';   // Desired format
 
                 $convertedPickDate = convertDateFormat($PickDate, $fromFormat, $toFormat);
                 $convertedDropDate = convertDateFormat($DropDate, $fromFormat, $toFormat);
 
+                // Convert the time formats
                 $formatPickTime = convertTo24HourFormat($PickTime);
                 $formatDropTime = convertTo24HourFormat($DropTime);
 
                 // Combine date and time for XML
                 $pickUpDateTime = $convertedPickDate . 'T' . $formatPickTime;
                 $dropOffDateTime = $convertedDropDate . 'T' . $formatDropTime;
-
-                // Define the XML request body with dynamic dates and times
-                $xmlRequest = <<<XML
-                <?xml version="1.0" encoding="UTF-8"?>
-                <OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_VehAvailRateRQ.xsd" Version="1.008">
-                    <POS>
-                        <Source ISOCountry="US" AgentDutyCode="T17R16L5D11">
-                            <RequestorID Type="4" ID="X975">
-                                <CompanyName Code="CP" CodeContext="4PH5"/>
-                            </RequestorID>
-                        </Source>
-                    </POS>
-                    <VehAvailRQCore Status="All">
-                        <VehRentalCore PickUpDateTime="$pickUpDateTime" ReturnDateTime="$dropOffDateTime">
-                            <PickUpLocation LocationCode="MEL" Type="IATA" />
-                            <ReturnLocation LocationCode="SYD" Type="IATA" />
-                        </VehRentalCore>
-                    </VehAvailRQCore>
-                </OTA_VehAvailRateRQ>
-                XML;
-
+                if(($dropType == "Same Drop-off Location")){
+                    $xmlRequest = <<<XML
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_VehAvailRateRQ.xsd" Version="1.008">
+                        <POS>
+                            <Source ISOCountry="US" AgentDutyCode="T17R16L5D11">
+                                <RequestorID Type="4" ID="X975">
+                                    <CompanyName Code="CP" CodeContext="4PH5"/>
+                                </RequestorID>
+                            </Source>
+                        </POS>
+                        <VehAvailRQCore Status="All">
+                            <VehRentalCore PickUpDateTime="$pickUpDateTime" ReturnDateTime="$dropOffDateTime">
+                                <PickUpLocation LocationCode="MEL" Type="IATA" />
+                            </VehRentalCore>
+                        </VehAvailRQCore>
+                    </OTA_VehAvailRateRQ>
+                    XML;
+                }elseif(($dropType == "Different Drop-off Location")){
+                    $xmlRequest = <<<XML
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_VehAvailRateRQ.xsd" Version="1.008">
+                        <POS>
+                            <Source ISOCountry="US" AgentDutyCode="T17R16L5D11">
+                                <RequestorID Type="4" ID="X975">
+                                    <CompanyName Code="CP" CodeContext="4PH5"/>
+                                </RequestorID>
+                            </Source>
+                        </POS>
+                        <VehAvailRQCore Status="All">
+                            <VehRentalCore PickUpDateTime="$pickUpDateTime" ReturnDateTime="$dropOffDateTime">
+                                <PickUpLocation LocationCode="MEL" Type="IATA" />
+                                <ReturnLocation LocationCode="SYD" Type="IATA" />
+                            </VehRentalCore>
+                        </VehAvailRQCore>
+                    </OTA_VehAvailRateRQ>
+                    XML;
+                }
                 // Initialize cURL session
                 $ch = curl_init();
 
@@ -146,9 +168,10 @@
 
                 // Close cURL session
                 curl_close($ch);
-                echo $response;
-            }
 
+                // Handle the response (for now, let's just var_dump it)
+                var_dump($response);
+            }
             
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['view_btn'])) {
                 $view_confirmNo = $_POST['view_confirmNo'];
@@ -366,6 +389,8 @@
                     <div class="row m-3 p-2 gap-3 offset-1 justify-content-center">
                         <button id="closeBtn" class="btn btn-hover text-center col-5" style="border: 2px solid black; padding: 10px;">Cancel</button>
                         <button name="dicountBtn" id="dicountBtn" class="bg-warning btn col-5" style="padding: 10px;">Apply</button>
+                    </div>
+                    <div class="">
                     </div>
                 </form>
             </div>
