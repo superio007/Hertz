@@ -1,0 +1,1653 @@
+{
+    "@attributes": {
+      "Target": "Test",
+      "Version": "2.007"
+    },
+    "Success": {},
+    "Warnings": {
+      "Warning": [
+        {
+          "@attributes": {
+            "Type": "1",
+            "ShortText": "TOLL CHARGE APPLIES",
+            "RecordID": "510"
+          }
+        },
+        {
+          "@attributes": {
+            "Type": "1",
+            "ShortText": "CREDIT CARD SURCHARGE OF 1.35% APPLIES TO QUALIFYING RENTALS",
+            "RecordID": "766"
+          }
+        },
+        {
+          "@attributes": {
+            "Type": "1",
+            "ShortText": "A BOND MAY APPLY.",
+            "RecordID": "767"
+          }
+        }
+      ]
+    },
+    "VehAvailRSCore": {
+      "VehRentalCore": {
+        "@attributes": {
+          "PickUpDateTime": "2024-08-29T07:30:00-06:00",
+          "ReturnDateTime": "2024-08-31T19:30:00-06:00"
+        },
+        "PickUpLocation": {
+          "@attributes": {
+            "ExtendedLocationCode": "MELT50",
+            "LocationCode": "MEL",
+            "CodeContext": "IATA"
+          }
+        },
+        "ReturnLocation": {
+          "@attributes": {
+            "ExtendedLocationCode": "MELT50",
+            "LocationCode": "MEL",
+            "CodeContext": "IATA"
+          }
+        }
+      },
+      "VehVendorAvails": {
+        "VehVendorAvail": [
+          {
+            "Vendor": {
+              "@attributes": {
+                "Code": "ZE"
+              }
+            },
+            "VehAvails": {
+              "VehAvail": [
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "2",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "EDAR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "3"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "A SUZUKI SWIFT OR SIMILAR",
+                          "Code": "EDAR"
+                        }
+                      },
+                      "PictureURL": "ZEAUEDAR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "179.49",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "27.69",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "59.83",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "179.49",
+                        "EstimatedTotalAmount": "304.56",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "65.60",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "6.28",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6601"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "2",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Manual",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "CCMR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "4"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "B TOYOTA COROLLA OR SIMILAR",
+                          "Code": "CCMR"
+                        }
+                      },
+                      "PictureURL": "ZEAUCCMR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "195.30",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "29.83",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "65.10",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "195.30",
+                        "EstimatedTotalAmount": "328.13",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "70.66",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "6.84",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6602"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "4",
+                        "BaggageQuantity": "2",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "CDAR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "4"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "H HYUNDAI I30 OR SIMILAR",
+                          "Code": "CDAR"
+                        }
+                      },
+                      "PictureURL": "ZEAUCDAR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "186.00",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "28.57",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "62.00",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "186.00",
+                        "EstimatedTotalAmount": "314.26",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "67.68",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "6.51",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6603"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "3",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "IDAR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "6"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "C TOYOTA COROLLA OR SIMILAR",
+                          "Code": "IDAR"
+                        }
+                      },
+                      "PictureURL": "ZEAUIDAR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "198.93",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "30.32",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "66.31",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "198.93",
+                        "EstimatedTotalAmount": "333.53",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "71.82",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "6.96",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6604"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "3",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "SDAR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "7"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "S TOYOTA COROLLA OR SIMILAR",
+                          "Code": "SDAR"
+                        }
+                      },
+                      "PictureURL": "ZEAUSDAR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "209.61",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "31.76",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "69.87",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "209.61",
+                        "EstimatedTotalAmount": "349.45",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "75.24",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "7.34",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6605"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "3",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Hybrid",
+                        "DriveType": "Unspecified",
+                        "Code": "SDAH",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "7"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "S2 TOYOTA COROLLA SEDAN HYBRID",
+                          "Code": "SDAH"
+                        }
+                      },
+                      "PictureURL": "ZEAUSDAH999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "220.32",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "33.22",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "73.44",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "220.32",
+                        "EstimatedTotalAmount": "365.41",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "78.66",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "7.71",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6606"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "5",
+                        "BaggageQuantity": "3",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "Unspecified",
+                        "Code": "FDAR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "1",
+                          "DoorCount": "4"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "8"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "D TOYOTA CAMRY SEDAN OR SIMILAR",
+                          "Code": "FDAR"
+                        }
+                      },
+                      "PictureURL": "ZEAUFDAR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "215.61",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "32.59",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "71.87",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "215.61",
+                        "EstimatedTotalAmount": "358.41",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "77.16",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "7.55",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6607"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "40.91",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "VehAvailCore": {
+                    "@attributes": {
+                      "Status": "Available",
+                      "IsAlternateInd": "false"
+                    },
+                    "Vehicle": {
+                      "@attributes": {
+                        "PassengerQuantity": "4",
+                        "BaggageQuantity": "2",
+                        "AirConditionInd": "true",
+                        "TransmissionType": "Automatic",
+                        "FuelType": "Unspecified",
+                        "DriveType": "AWD",
+                        "Code": "JFDR",
+                        "CodeContext": "SIPP"
+                      },
+                      "VehType": {
+                        "@attributes": {
+                          "VehicleCategory": "3"
+                        }
+                      },
+                      "VehClass": {
+                        "@attributes": {
+                          "Size": "36"
+                        }
+                      },
+                      "VehMakeModel": {
+                        "@attributes": {
+                          "Name": "V5 AUDI Q5 INC. GPS",
+                          "Code": "JFDR"
+                        }
+                      },
+                      "PictureURL": "ZEAUJFDR999.jpg"
+                    },
+                    "RentalRate": {
+                      "RateDistance": {
+                        "@attributes": {
+                          "Unlimited": "true",
+                          "DistUnitName": "Km",
+                          "VehiclePeriodUnitName": "RentalPeriod"
+                        }
+                      },
+                      "VehicleCharges": {
+                        "VehicleCharge": {
+                          "@attributes": {
+                            "Purpose": "1",
+                            "TaxInclusive": "false",
+                            "GuaranteedInd": "true",
+                            "Amount": "316.23",
+                            "CurrencyCode": "AUD",
+                            "IncludedInRate": "false"
+                          },
+                          "TaxAmounts": {
+                            "TaxAmount": {
+                              "@attributes": {
+                                "Total": "46.22",
+                                "CurrencyCode": "AUD",
+                                "Percentage": "10.00",
+                                "Description": "Tax"
+                              }
+                            }
+                          },
+                          "Calculation": {
+                            "@attributes": {
+                              "UnitCharge": "105.41",
+                              "UnitName": "Day",
+                              "Quantity": "3"
+                            }
+                          }
+                        }
+                      },
+                      "RateQualifier": {
+                        "@attributes": {
+                          "ArriveByFlight": "false",
+                          "RateCategory": "3",
+                          "RateQualifier": "D03NAU"
+                        }
+                      }
+                    },
+                    "TotalCharge": {
+                      "@attributes": {
+                        "RateTotalAmount": "316.23",
+                        "EstimatedTotalAmount": "508.37",
+                        "CurrencyCode": "AUD"
+                      }
+                    },
+                    "Fees": {
+                      "Fee": [
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "LOCATION FEE:",
+                            "Amount": "109.35",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "ADMN RECOVERY:",
+                            "Amount": "11.07",
+                            "CurrencyCode": "AUD"
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Purpose": "5",
+                            "TaxInclusive": "false",
+                            "Description": "VEHICLE REGISTRATION RECOVERY:",
+                            "Amount": "25.50",
+                            "CurrencyCode": "AUD"
+                          }
+                        }
+                      ]
+                    },
+                    "Reference": {
+                      "@attributes": {
+                        "Type": "16",
+                        "ID": "H8D6DM5TEW85332-6613"
+                      }
+                    }
+                  },
+                  "VehAvailInfo": {
+                    "PricedCoverages": {
+                      "PricedCoverage": [
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "24"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "50.00",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "@attributes": {
+                            "Required": "false"
+                          },
+                          "Coverage": {
+                            "@attributes": {
+                              "CoverageType": "56"
+                            }
+                          },
+                          "Charge": {
+                            "@attributes": {
+                              "TaxInclusive": "false",
+                              "IncludedInRate": "false",
+                              "CurrencyCode": "AUD"
+                            },
+                            "Calculation": {
+                              "@attributes": {
+                                "UnitCharge": "50.00",
+                                "UnitName": "Day",
+                                "Quantity": "1"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Info": {
+      "LocationDetails": {
+        "@attributes": {
+          "Name": "MELBOURNE APT"
+        },
+        "Address": {
+          "@attributes": {
+            "FormattedInd": "false"
+          },
+          "AddressLine": [
+            "TULLAMARINE AIRPORT",
+            "ARRIVAL DRV, TULLAMARINE"
+          ],
+          "CityName": "MELBOURNE VIC (1)",
+          "PostalCode": "3045",
+          "StateProv": "VICTORIA",
+          "CountryName": "AUSTRALIA"
+        },
+        "Telephone": {
+          "@attributes": {
+            "PhoneLocationType": "4",
+            "PhoneTechType": "1",
+            "PhoneNumber": " 03 93384044",
+            "FormattedInd": "false"
+          }
+        },
+        "AdditionalInfo": {
+          "ParkLocation": {
+            "@attributes": {
+              "Location": "1"
+            }
+          },
+          "CounterLocation": {
+            "@attributes": {
+              "Location": "1"
+            }
+          },
+          "OperationSchedules": {
+            "OperationSchedule": {
+              "OperationTimes": {
+                "OperationTime": [
+                  {
+                    "@attributes": {
+                      "Text": "MON-FRI 0600-0100 SAT 0700-2200 SUN 0700-2400"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Mon": "true",
+                      "Start": "00:01",
+                      "End": "01:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Mon": "true",
+                      "Start": "06:00",
+                      "End": "23:59"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Tue": "true",
+                      "Start": "00:01",
+                      "End": "01:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Tue": "true",
+                      "Start": "06:00",
+                      "End": "23:59"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Weds": "true",
+                      "Start": "00:01",
+                      "End": "01:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Weds": "true",
+                      "Start": "06:00",
+                      "End": "23:59"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Thur": "true",
+                      "Start": "00:01",
+                      "End": "01:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Thur": "true",
+                      "Start": "06:00",
+                      "End": "23:59"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Fri": "true",
+                      "Start": "00:01",
+                      "End": "01:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Fri": "true",
+                      "Start": "06:00",
+                      "End": "23:59"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Sat": "true",
+                      "Start": "07:00",
+                      "End": "22:00"
+                    }
+                  },
+                  {
+                    "@attributes": {
+                      "Sun": "true",
+                      "Start": "07:00",
+                      "End": "23:59"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

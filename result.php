@@ -1,3 +1,27 @@
+<?php
+session_start();
+$results = $_SESSION['results'];
+
+function xmlToJson($xmlString)
+{
+    // Load the XML string into a SimpleXMLElement object
+    $xml = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
+
+    // Convert the SimpleXMLElement object to a JSON string
+    $json = json_encode($xml);
+
+    // Decode the JSON string into an associative array
+    $array = json_decode($json, true);
+
+    // Return the associative array
+    return $array;
+}
+
+// Convert XML to JSON
+$xmlString = $results; // Use your XML string from the session
+$data = xmlToJson($xmlString);
+$vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAvails']['VehAvail'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,57 +33,57 @@
     <script src="https://kit.fontawesome.com/74e6741759.js" crossorigin="anonymous"></script>
 </head>
 <style>
-#search_result p{
-    margin: 0;
-}
-#search_result a{
-    text-decoration: none;
-}
-.instruct-p{
-    font-size: 12px;
-    font-weight:700;
-}
-.card img{
-    object-fit: contain;
-    image-rendering: inherit;
-    width: min-content;
-}
-#vechical_spec{
-    border-top: 1px solid rgba(0, 0, 0, 0.301);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.301);
-}
-#standard_rate{
-    font-weight: 400;
-}
-#standard_rate:hover{
-    background-color: black;
-    color: #ffffff;
-}
-.card{
-    width: auto;
-    max-width: 400px;
-    border-bottom: yellow 4px solid; 
-    border-radius: 5px;
-    box-shadow: rgba(128, 128, 128, 0.432) 2px 4px 2px 1px;
-}
-#search_box{
-    background-color: #5c5f65;
-    margin: auto;
-    border-bottom: yellow 3px solid;
-    margin-bottom: 2rem;
-    padding: 0.8rem;
-}
-#car_result{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px; /* Adjust the gap between cards as needed */
-    padding: 20px;
-}
-@media screen and (max-width:769px) {
-    #car_result{
-        grid-template-columns: repeat(1, 1fr);
+    #search_result p{
+        margin: 0;
     }
-}
+    #search_result a{
+        text-decoration: none;
+    }
+    .instruct-p{
+        font-size: 12px;
+        font-weight:700;
+    }
+    .card img{
+        object-fit: contain;
+        image-rendering: inherit;
+        width: min-content;
+    }
+    #vechical_spec{
+        border-top: 1px solid rgba(0, 0, 0, 0.301);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.301);
+    }
+    #standard_rate{
+        font-weight: 400;
+    }
+    #standard_rate:hover{
+        background-color: black;
+        color: #ffffff;
+    }
+    .card{
+        width: auto;
+        max-width: 400px;
+        border-bottom: yellow 4px solid; 
+        border-radius: 5px;
+        box-shadow: rgba(128, 128, 128, 0.432) 2px 4px 2px 1px;
+    }
+    #search_box{
+        background-color: #5c5f65;
+        margin: auto;
+        border-bottom: yellow 3px solid;
+        margin-bottom: 2rem;
+        padding: 0.8rem;
+    }
+    #car_result{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px; /* Adjust the gap between cards as needed */
+        padding: 20px;
+    }
+    @media screen and (max-width:769px) {
+        #car_result{
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
 </style>
 <body>
     <div id="search_result" class="bg-white">
@@ -140,28 +164,47 @@
             </div>
             <div class="">
                 <div id="car_result">
-                    <?php for($i = 0;$i<=15;$i++):?>
+                    <?php foreach($vehAvails as $vehAvail):?>
+                        <?php
+                            // Calculate the total price
+                            $rateTotalAmount = (float) $vehAvail['VehAvailCore']['TotalCharge']['@attributes']['RateTotalAmount'];
+                            $estimatedTotalAmount = (float) $vehAvail['VehAvailCore']['TotalCharge']['@attributes']['EstimatedTotalAmount'];
+                            $finalPrice = $rateTotalAmount;
+
+                            // Add up the fees
+                            if (isset($vehAvail['VehAvailCore']['Fees']['Fee'])) {
+                                foreach ($vehAvail['VehAvailCore']['Fees']['Fee'] as $fee) {
+                                    $finalPrice += (float) $fee['@attributes']['Amount'];
+                                }
+                            }
+                        ?>
                         <div class="card" >
                             <div style="height: 210px;position: relative;" class="d-flex justify-content-center align-items-center">
-                                <img src="https://images.hertz.com/vehicles/220x128/ZEAUEDAR999.jpg" alt="">
+                                <img src="<?php echo 'https://images.hertz.com/vehicles/220x128/'. $vehAvail['VehAvailCore']['Vehicle']['PictureURL']?>" alt="image not available">
                                 <div style="position: absolute; bottom: 0; left: 25px;">
                                     <h2>Economy</h2>
-                                    <p>(A) Suzuki Swift or similar </p>
+                                    <p><?php echo  $vehAvail['VehAvailCore']['Vehicle']['VehMakeModel']['@attributes']['Name']?></p>
                                 </div>
                             </div>
                             <div  id="vechical_spec" class="my-2">
                                 <div class="card-body row offset-1">
                                     <div class="col-2 d-flex align-items-center">
                                         <img src="https://images.hertz.com/content/dam/irac/Overlay/icons/person.png" alt="">
-                                        <p>5</p>
+                                        <p><?php echo  $vehAvail['VehAvailCore']['Vehicle']['@attributes']['PassengerQuantity']?></p>
                                     </div>
                                     <div class="col-2 d-flex align-items-center">
                                         <img src="https://images.hertz.com/content/dam/irac/Overlay/icons/feature_suitcase.png" alt="">
-                                        <p>3</p>
+                                        <p><?php echo  $vehAvail['VehAvailCore']['Vehicle']['@attributes']['BaggageQuantity']?></p>
                                     </div>
                                     <div class="col-2 d-flex align-items-center">
                                         <img src="https://images.hertz.com/content/dam/irac/Overlay/icons/feature_transmission.png" alt="">
-                                        <p>A</p>
+                                        <p class="transmission"><?php 
+                                        if($vehAvail['VehAvailCore']['Vehicle']['@attributes']['TransmissionType'] == "Automatic"){
+                                            echo "A";
+                                        }else{
+                                            echo "M";
+                                        }
+                                          ?></p>
                                     </div>
                                     <div class="col-3 d-flex align-items-center">
                                         <img src="https://images.hertz.com/content/dam/irac/Overlay/icons/feature_fuel.png" alt="">
@@ -173,7 +216,7 @@
                             </div>
                             <div class="row p-3">
                                 <div class="d-flex justify-content-center align-content-center col-6">
-                                    <h3>3335.43</h3>
+                                    <h3><?php echo number_format($finalPrice, 2); ?></h3>
                                     <p class="pt-1">AUD</p>
                                 </div>
                                 <div class="col-6">
@@ -181,7 +224,7 @@
                                 </div>
                             </div>
                         </div>
-                    <?php endfor; ?>
+                    <?php endforeach;?>
                 </div>
             </div>
         </div>

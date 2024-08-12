@@ -1,0 +1,41 @@
+body{
+    background:url(https://images.hertz.com/content/Intl/Carousel/Asia/asia_ww_generic_en.jpg);
+}
+a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: large;
+}
+.input-div {
+    border: #858585 solid 1px;
+    position: relative;
+}
+.input {
+    background-color: #ffffff00;
+    border: none;
+}
+.input:focus {
+    background-color: transparent !important;
+    border: none;
+    outline: none;
+}
+#search-div2 .col-1, #view-div2 .col-1, #Edit-div2 .col-1, #Can-div2 .col-1 {
+    width: 14.333333%;
+}
+.api-widget {
+    position: relative;
+    background-color: white;
+    border-radius: 25px;
+    height: 170px;
+    border-bottom: yellow 4px solid; 
+}
+#popup{
+    position: absolute;
+    top: 7%;
+    left: 25%;
+    width: 500px;
+    height: 440px;
+}
+#cross{
+    cursor: pointer;
+}
