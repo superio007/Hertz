@@ -1,6 +1,7 @@
 <?php
 session_start();
 $results = $_SESSION['results'];
+$dataarray = $_SESSION['dataarray'];
 
 function xmlToJson($xmlString)
 {
@@ -86,6 +87,7 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
     }
 </style>
 <body>
+    <!-- for pc -->
     <div id="search_result" class="bg-white">
         <div id="search_box" class="row align-items-center d-none d-md-flex">
             <div class="col-6 d-flex align-items-center">
@@ -104,10 +106,11 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
             </div>
             <div class="col-6 d-flex align-items-center justify-content-end gap-2">
                 <i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i>
-                <p class="text-white">425.02</p>
+                <p id="price_holder" class="text-white">00.00</p>
                 <p class="text-white">AUD</p>
             </div>
         </div>
+        <!-- for mobile -->
         <div id="search_box" class="row align-items-center d-md-none">
             <div class="d-flex justify-content-end">
                 <button style="width: auto;" class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-list fa-lg" style="color: #ffffff;"></i></button>
@@ -164,7 +167,7 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
             </div>
             <div class="">
                 <div id="car_result">
-                    <?php foreach($vehAvails as $vehAvail):?>
+                    <?php $num = 1; foreach($vehAvails as $vehAvail):?>
                         <?php
                             // Calculate the total price
                             $rateTotalAmount = (float) $vehAvail['VehAvailCore']['TotalCharge']['@attributes']['RateTotalAmount'];
@@ -178,7 +181,7 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
                                 }
                             }
                         ?>
-                        <div class="card" >
+                        <div class="card" id="card_<?php echo $num ; ?> " data-index="<?php echo $num ; ?>">
                             <div style="height: 210px;position: relative;" class="d-flex justify-content-center align-items-center">
                                 <img src="<?php echo 'https://images.hertz.com/vehicles/220x128/'. $vehAvail['VehAvailCore']['Vehicle']['PictureURL']?>" alt="image not available">
                                 <div style="position: absolute; bottom: 0; left: 25px;">
@@ -217,17 +220,41 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
                             <div class="row p-3">
                                 <div class="d-flex justify-content-center align-content-center col-6">
                                     <h3><?php echo number_format($finalPrice, 2); ?></h3>
+                                    <input type="text" value="<?php echo number_format($finalPrice, 2); ?>" id="price_<?php echo $num; ?>" hidden>
                                     <p class="pt-1">AUD</p>
                                 </div>
                                 <div class="col-6">
+                                    <input type="text" name="venCode" id="venCode_<?php echo $num;?>" value="<?php echo $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['Vendor']['@attributes']['Code']?>" hidden>
+                                    <input type="text" name="vehcontext" id="vehcontext_<?php echo $num;?>" value="<?php echo $vehAvail['VehAvailCore']['Vehicle']['@attributes']['CodeContext']?>" hidden>
+                                    <input type="text" name="veh_Code" id="veh_Code_<?php echo $num;?>" value="<?php echo $vehAvail['VehAvailCore']['Vehicle']['@attributes']['Code']?>" hidden>
                                     <button class="btn" style="border: 1px solid black;" id="standard_rate">Standard Rate</button>
                                 </div>
                             </div>
                         </div>
+                        <?php $num++; ?>
                     <?php endforeach;?>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all cards
+            var cards = document.querySelectorAll('.card');
+
+            // Loop through each card and add a click event listener
+            cards.forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var index = this.getAttribute('data-index'); // Get the data-index of the clicked card
+                    document.getElementById('price_holder').innerHTML = document.getElementById('price_' + index).value;
+                    let vehcontext = document.getElementById('vehcontext_'+index).value
+                    let venCode = document.getElementById('venCode_'+index).value
+                    let veh_Code = document.getElementById('veh_Code_'+index).value
+                    window.location.href = `form.php?venCode=${venCode}&vehcontext=${vehcontext}&veh_Code=${veh_Code}`;
+
+                });
+            });
+        });
+    </script>
 </body>
 </html>

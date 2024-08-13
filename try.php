@@ -1,16 +1,34 @@
 <?php
 session_start();
-$json = $_SESSION['results'];
+$results = $_SESSION['results'] ?? ''; // Safely get session data
 
-// Decode the JSON string into a PHP array
-$data = json_decode($json, true);
+if ($results) {
+    // Load the XML string into a SimpleXMLElement object
+    $xml = simplexml_load_string($results);
 
-var_dump($data);
+    if ($xml !== false) {
+        // Register namespaces for XPath queries
+        $xml->registerXPathNamespace('ota', 'http://www.opentravel.org/OTA/2003/05');
 
-foreach($data['']['Info']['LocationDetails']['@attributes'] as $name){
-    echo "Location Name: " . $name['name'];
+        // Find and remove all VehAvail elements that don't have Code="CCMR"
+        foreach ($xml->xpath('//ota:VehAvail[ota:VehAvailCore/ota:Vehicle/@Code != "CCMR"]') as $remove) {
+            unset($remove[0]);
+        }
+
+        // Convert the filtered SimpleXMLElement object to JSON
+        $json = json_encode($xml);
+
+        if ($json !== false) {
+            echo "<pre>";
+            var_dump($json);
+            echo "</pre>";
+        } else {
+            echo "Failed to convert XML to JSON.";
+        }
+    } else {
+        echo "Failed to parse XML.";
+    }
+} else {
+    echo "No XML data found in session.";
 }
-// Output the name
-
 ?>
-{Root}.VehAvailRSCore.VehVendorAvails.VehVendorAvail[1].VehAvails.VehAvail

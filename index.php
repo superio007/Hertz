@@ -195,6 +195,13 @@ session_start();
                 // Handle the response (for now, let's just var_dump it)
                 if(strlen($response)>500){
                     $_SESSION['results'] = $response;
+                    $dataarray = [
+                        'pickUpDateTime' => $pickUpDateTime,
+                        'dropOffDateTime' => $dropOffDateTime,
+                        'pickLocation' => $Pickup,
+                        'dropLocation' => $Drop_off,
+                    ];
+                    $_SESSION['dataarray'] = $dataarray;
                     echo "<script>window.location.href = 'result.php';</script>";
                 }else{
                     var_dump($response);

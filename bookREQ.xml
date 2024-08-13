@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OTA_VehResRQ xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_VehResRQ.xsd" Version="1.008" SequenceNmbr="123456789">
+  <POS>
+    <Source ISOCountry="AU" AgentDutyCode="T17R16L5D11">
+      <RequestorID Type="4" ID="X975">
+        <CompanyName Code="CP" CodeContext="4PH5"/>
+      </RequestorID>
+    </Source>
+  </POS>
+  <VehResRQCore>
+    <VehRentalCore PickUpDateTime="2024-08-18T12:00:00" ReturnDateTime="2024-08-19T12:00:00">
+      <PickUpLocation LocationCode="MEL"/>
+      <ReturnLocation LocationCode="SYD"/>
+    </VehRentalCore>
+    <Customer>
+        <Primary>
+            <PersonName>
+                <GivenName>Kiran<GivenName>
+                <Surname>Dhoke</Surname>
+            </PersonName>
+            <Address>
+                <AddressLine>l9/53 Queen St</AddressLine>
+                <CityName>Melbourne</CityName>
+                <PostalCode>3000</PostalCode>
+                <StateProv StateCode="VIC">Victoria</StateProv>
+                <CountryName Code="AU">AUSTRALIA </CountryName><!-- ISO country code -->
+            </Address>
+        </Primary>
+        </Customer>
+    <VehiclePref Code="EDAR"> <!-- Updated to reflect a specific model that is available -->
+      <VehType VehicleCategory="1"/>
+      <VehClass Size="3"/>
+    </VehiclePref>
+  </VehResRQCore>
+</OTA_VehResRQ>
