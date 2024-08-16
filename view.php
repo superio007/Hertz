@@ -31,10 +31,7 @@
             $view_confirmNo = $_POST['view_confirmNo'];
             $view_Lname = $_POST['view_Lname'];
         
-            // // Echo statements for the view widget
-            echo "<h2>View Widget</h2>";
-            echo "<p>Confirmation Number: $view_confirmNo</p>";
-            echo "<p>Last Name: $view_Lname</p>";
+            echo "<script>window.location.href=\"index.html?cnfNo=$view_confirmNo&lName=$view_Lname\"</script>";
         }
     ?>
 <div class="container">
@@ -49,18 +46,18 @@
                 <div class="input-div col-5 p-2 d-grid">
                     <label class="internal-label"
                         for="view_confirmNo">Confirmation Number</label>
-                    <input type="text" class="input" id="view_confirmNo"
+                    <input type="text" class="input text-uppercase" id="view_confirmNo"
                         value name="view_confirmNo" required>
                 </div>
                 <div class="input-div col-5 p-2 d-grid">
                     <label class="internal-label" for="view_Lname">Last
                         Name:</label>
-                    <input type="text" class="input" id="view_Lname" value
+                    <input type="text" class="input text-uppercase" id="view_Lname" value
                         name="view_Lname" required>
                 </div>
                 <div class="col-1 d-flex">
                     <button name="view_btn" id="view-btn" class="btn bg-secondary"
-                        disabled>View Vechicles</button>
+                        disabled>View Details</button>
                 </div>
             </div>
         </form>
@@ -81,6 +78,7 @@
                 view_btn.disabled = true;
             }
         }
+        
         document.getElementById('view_to_search').addEventListener('click',function(){
             window.location.href = "index.php";
         })

@@ -24,19 +24,90 @@
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
     <link rel="stylesheet"
         href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <?php
+$can = false;
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Can_btn'])) {
     $Can_confirmNo = $_POST['Can_confirmNo'];
     $Can_Lname = $_POST['Can_Lname'];
 
-    // // Echo statements for the cancel widget
-    // echo "<h2>Cancel Widget</h2>";
-    // echo "<p>Confirmation Number: $Can_confirmNo</p>";
-    // echo "<p>Last Name: $Can_Lname</p>";
-}
+    $xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        <OTA_VehCancelRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
+            <POS>
+                <Source PseudoCityCode=\"XXXX\" ISOCountry=\"US\" AgentDutyCode=\"T17R16L5D11\">
+                    <RequestorID Type=\"4\" ID=\"X975\">
+                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"/>
+                    </RequestorID>
+                </Source>
+                <Source>
+                    <RequestorID Type=\"5\" ID=\"ota2007a\"/>
+                </Source>
+            </POS>
+            <VehCancelRQCore CancelType=\"Book\">
+                <UniqueID Type=\"14\" ID=\"$Can_confirmNo\"/>
+                <PersonName>
+                    <Surname>$Can_Lname</Surname>
+                </PersonName>
+            </VehCancelRQCore>
+        </OTA_VehCancelRQ>";
+        //  Initialize cURL session
+            $ch = curl_init();
+
+            // Set cURL options
+            curl_setopt($ch, CURLOPT_URL, "https://vv.xqual.hertz.com/DirectLinkWEB/handlers/DirectLinkHandler?id=ota2007a");
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/xml',
+                'Content-Length: ' . strlen($xmlString)
+            ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlString);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+            // Execute cURL request and get the response
+            $response = curl_exec($ch);
+
+            // Check for cURL errors
+            if ($response === false) {
+                $error = curl_error($ch);
+                curl_close($ch);
+                die('cURL Error: ' . $error);
+            }
+
+            // Close cURL session
+            curl_close($ch);
+
+            // Load the XML string into a SimpleXMLElement object
+            $xml = simplexml_load_string($response);
+
+            // Register the namespace for the XML
+            $xml->registerXPathNamespace('ns', 'http://www.opentravel.org/OTA/2003/05');
+
+            // Check if the CancelStatus is "Cancelled"
+            $result = $xml->xpath("//ns:VehCancelRSCore[@CancelStatus='Cancelled']");
+
+            if ($result) {
+                $can = true;
+            }
+        }
 ?>
+<script>
+    let can = <?php echo json_encode($can); ?>; // Encode PHP boolean to JavaScript boolean
+    if(can){
+        Swal.fire({
+            title: "Cancelled!",
+            text: "Your reservation is cancelled!",
+            icon: "success"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.php";
+            }
+        });
+    }
+</script>
 <div class="container">
     <h1 class="text-center">Rent a car!</h1>
     <div id="Can-widget" class="api-widget p-3">
@@ -49,18 +120,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Can_btn'])) {
                 <div class="input-div col-5 p-2 d-grid">
                     <label class="internal-label"
                         for="Can_confirmNo">Confirmation Number</label>
-                    <input type="text" class="input" id="Can_confirmNo"
-                        value name="Can_confirmNo" required>
+                    <input type="text" class="input text-uppercase" id="Can_confirmNo"
+                        name="Can_confirmNo" required>
                 </div>
                 <div class="input-div col-5 p-2 d-grid">
                     <label class="internal-label" for="Can_Lname">Last
                         Name:</label>
-                    <input type="text" class="input" id="Can_Lname" value
+                    <input type="text" class="input text-uppercase" id="Can_Lname" 
                         name="Can_Lname" required>
                 </div>
                 <div class="col-1 d-flex">
                     <button name="Can_btn" id="Can-btn" class="btn bg-secondary"
-                        disabled>View Vechicles</button>
+                        disabled>Cancle Reservation</button>
                 </div>
             </div>
         </form>
@@ -71,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Can_btn'])) {
         var Can_confirmNo = document.getElementById('Can_confirmNo').value;
         var Can_Lname = document.getElementById('Can_Lname').value;
         var Can_btn = document.getElementById('Can-btn');
-        if(Can_confirmNo !== "" && Can_Lname){
+        if(Can_confirmNo !== "" && Can_Lname !== ""){
             Can_btn.classList.remove('bg-secondary');
             Can_btn.classList.add('bg-warning');
             Can_btn.disabled = false;
@@ -83,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['Can_btn'])) {
     }
     document.getElementById('Can_to_search').addEventListener('click',function(){
         window.location.href = "index.php";
-    })
+    });
     document.getElementById('Can_confirmNo').addEventListener('input',CanTooglebtn);
     document.getElementById('Can_Lname').addEventListener('input',CanTooglebtn);
 </script>

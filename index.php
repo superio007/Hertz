@@ -87,82 +87,41 @@ session_start();
                 }
 
                 if(($dropType == "Same Drop-off Location")){
-                    $json = [
-                        "OTA_VehAvailRateRQ"=> [
-                            "Version"=> "1.008",
-                            "POS"=> [
-                                "Source"=> [
-                                    "ISOCountry"=> "AU",
-                                    "AgentDutyCode"=> "T17R16L5D11",
-                                    "RequestorID"=> [
-                                        "Type"=> "4",
-                                        "ID"=> "X975",
-                                        "CompanyName"=> [
-                                            "Code"=> "CP",
-                                            "CodeContext"=> "4PH5"
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            "VehAvailRQCore"=> [
-                                "Status"=> "All",
-                                "VehRentalCore"=> [
-                                    "PickUpDateTime"=> $pickUpDateTime,
-                                    "ReturnDateTime"=> $dropOffDateTime,
-                                    "PickUpLocation"=> [
-                                        "LocationCode"=> $Pickup,
-                                        "Type"=> "IATA"
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ];
+                    $xml = "
+                    <?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+                        <OTA_VehAvailRateRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
+                            <POS>
+                                <Source ISOCountry=\"AU\" AgentDutyCode=\"T17R16L5D11\">
+                                    <RequestorID Type=\"4\" ID=\"X975\">
+                                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"></CompanyName>
+                                    </RequestorID>
+                                </Source>
+                            </POS>
+                            <VehAvailRQCore>
+                                <VehRentalCore PickUpDateTime=\"$pickUpDateTime\" ReturnDateTime=\"$dropOffDateTime\">
+                                    <PickUpLocation LocationCode=\"$Pickup\" Type=\"IATA\"></PickUpLocation>
+                                </VehRentalCore>
+                            </VehAvailRQCore>
+                        </OTA_VehAvailRateRQ>";
                 }elseif(($dropType == "Different Drop-off Location")){
-                    $json = [
-                        "OTA_VehAvailRateRQ"=> [
-                            "Version"=> "1.008",
-                            "POS"=> [
-                                "Source"=> [
-                                    "ISOCountry"=> "AU",
-                                    "AgentDutyCode"=> "T17R16L5D11",
-                                    "RequestorID"=> [
-                                        "Type"=> "4",
-                                        "ID"=> "X975",
-                                        "CompanyName"=> [
-                                            "Code"=> "CP",
-                                            "CodeContext"=> "4PH5"
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            "VehAvailRQCore"=> [
-                                "Status"=> "All",
-                                "VehRentalCore"=> [
-                                    "PickUpDateTime"=> $pickUpDateTime,
-                                    "ReturnDateTime"=> $dropOffDateTime,
-                                    "PickUpLocation"=> [
-                                        "LocationCode"=> $Pickup,
-                                        "Type"=> "IATA"
-                                    ],
-                                    "ReturnLocation"=> [
-                                        "LocationCode"=> $Drop_off,
-                                        "Type"=> "IATA"
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ];
+                    $xml = "
+                    <?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+                        <OTA_VehAvailRateRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
+                            <POS>
+                                <Source ISOCountry=\"AU\" AgentDutyCode=\"T17R16L5D11\">
+                                    <RequestorID Type=\"4\" ID=\"X975\">
+                                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"></CompanyName>
+                                    </RequestorID>
+                                </Source>
+                            </POS>
+                            <VehAvailRQCore>
+                                <VehRentalCore PickUpDateTime=\"$pickUpDateTime\" ReturnDateTime=\"$dropOffDateTime\">
+                                    <PickUpLocation LocationCode=\"$Pickup\" Type=\"IATA\"></PickUpLocation>
+                                    <ReturnLocation LocationCode=\"$Drop_off\" Type=\"IATA\"></ReturnLocation>
+                                </VehRentalCore>
+                            </VehAvailRQCore>
+                        </OTA_VehAvailRateRQ>";
                 }
-                // Initialize cURL session
-                
-                $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05"></OTA_VehAvailRateRQ>');
-
-                arrayToXml($json['OTA_VehAvailRateRQ'], $xmlData);
-
-                $dom = dom_import_simplexml($xmlData)->ownerDocument;
-                $dom->formatOutput = true;
-
-                $myxml = $dom->saveXML();
 
                 // Initialize cURL session
                 $ch = curl_init();
@@ -172,9 +131,9 @@ session_start();
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
                     'Content-Type: application/xml',
-                    'Content-Length: ' . strlen($myxml)
+                    'Content-Length: ' . strlen($xml)
                 ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $myxml);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -204,7 +163,7 @@ session_start();
                     $_SESSION['dataarray'] = $dataarray;
                     echo "<script>window.location.href = 'result.php';</script>";
                 }else{
-                    var_dump($response);
+                    echo "<script>alert(\"vechicles are not available\")</script>";
                 }
                 
             }

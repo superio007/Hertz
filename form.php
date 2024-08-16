@@ -2,6 +2,11 @@
 session_start();
 $results = $_SESSION['results'] ?? ''; // Safely get session data
 $dataarray = $_SESSION['dataarray'] ?? '';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Load Composer's autoloader
+require 'vendor/autoload.php';
 if (isset($_GET['veh_Code'])) {
     $veh_Code = $_GET['veh_Code'];
 }
@@ -83,84 +88,56 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $email = $_POST['email'];
     $mobile_country_code = $_POST['mobile_country_code'];
     $mobile_number = $_POST['mobile_number'];
-    $jsonReq = 
-        [
-            "OTA_VehResRQ" => [
-              "@xmlns" => "http://www.opentravel.org/OTA/2003/05",
-              "@Version" => "1.008",
-              "POS" => [
-                "Source" => [
-                  "@ISOCountry" => $mobile_country_code,
-                  "@AgentDutyCode" => "T17R16L5D11",
-                  "RequestorID" => [
-                    "@Type" => "4",
-                    "@ID" => "X975",
-                    "CompanyName" => [
-                      "@Code" => "CP",
-                      "@CodeContext" => "4PH5"
-                    ]
-                  ]
-                ]
-              ],
-              "VehResRQCore" => [
-                "VehRentalCore" => [
-                  "@PickUpDateTime" => $dataarray['pickUpDateTime'],
-                  "@ReturnDateTime" => $dataarray['dropOffDateTime'],
-                  "PickUpLocation" => [
-                    "@LocationCode" => $dataarray['pickLocation'],
-                    "@CodeContext" => "IATA"
-                  ],
-                  "ReturnLocation" => [
-                    "@LocationCode" => $dataarray['dropLocation'] ?? $dataarray['pickLocation'],
-                    "@CodeContext" => "IATA"
-                  ]
-                ],
-                "Customer" => [
-                  "Primary" => [
-                    "PersonName" => [
-                      "GivenName" => $first_name,
-                      "Surname" => $last_name
-                    ],
-                    "Email" => $email,
-                    "Address" => [
-                      "AddressLine" => "123 Main St",
-                      "CityName" => "Los Angeles",
-                      "StateProv" => [
-                        "@StateCode" => "CA"
-                      ],
-                      "CountryName" => [
-                        "@Code" => $mobile_country_code
-                      ]
-                    ]
-                  ]
-                ],
-                "VendorPref" => [
-                  "@Code" => $venCode
-                ],
-                "VehPref" => [
-                  "@Code" => $veh_Code,
-                  "@CodeContext" => $vehcontext
-                ],
-                "RentalPaymentPref" => [
-                  "Voucher" => [
-                    "@Identifier" => "12345678",
-                    "@IdentifierContext" => "TestVoucher"
-                  ]
-                ]
-              ]
-            ]
-        ];  
-        var_dump($jsonReq);
-        $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><OTA_VehResRQ xmlns="http://www.opentravel.org/OTA/2003/05"></OTA_VehResRQ>');
-
-        arrayToXml($jsonReq['OTA_VehResRQ'], $xmlData);
-
-
-        $dom = dom_import_simplexml($xmlData)->ownerDocument;
-        $dom->formatOutput = true;
-
-        $myxml = $dom->saveXML();
-
+        $pickupLocation = $dataarray['pickLocation'];
+        $returnLocation = $dataarray['dropLocation'] ?? $dataarray['pickLocation'];
+        $pickupDateTime =  $dataarray['pickUpDateTime'];
+        $returnDateTime = $dataarray['dropOffDateTime'];
+        $givenName = $first_name;
+        $surname = $last_name;
+        $email = $email;
+        $address = $_POST['Address'];
+        $city = $_POST['City'];
+        $stateCode = $_POST['State'];
+        $countryCode = $mobile_country_code;
+        $voucher = "12345678";
+        $xml = "
+            <OTA_VehResRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
+                <POS>
+                    <Source ISOCountry=\"IN\" AgentDutyCode=\"T17R16L5D11\">
+                        <RequestorID Type=\"4\" ID=\"X975\">
+                            <CompanyName Code=\"CP\" CodeContext=\"4PH5\"/>
+                        </RequestorID>
+                    </Source>
+                </POS>
+                <VehResRQCore>
+                    <VehRentalCore PickUpDateTime=\"$pickupDateTime\" ReturnDateTime=\"$returnDateTime\">
+                        <PickUpLocation LocationCode=\"$pickupLocation\" CodeContext=\"IATA\"/>
+                        <ReturnLocation LocationCode=\"$returnLocation\" CodeContext=\"IATA\"/>
+                    </VehRentalCore>
+                    <Customer>
+                        <Primary>
+                            <PersonName>
+                                <GivenName>$givenName</GivenName>
+                                <Surname>$surname</Surname>
+                            </PersonName>
+                            <Email>$email</Email>
+                            <Address>
+                                <AddressLine>$address</AddressLine>
+                                <CityName>$city</CityName>
+                                <StateProv StateCode=\"$stateCode\"/>
+                                <CountryName Code=\"$countryCode\"/>
+                            </Address>
+                        </Primary>
+                    </Customer>
+                    <VendorPref Code=\"ZE\"/>
+                    <VehPref Code=\"CDAR\" CodeContext=\"SIPP\"/>
+                    <RentalPaymentPref>
+                        <Voucher Identifier=\"$voucher\" IdentifierContext=\"TestVoucher\"/>
+                    </RentalPaymentPref>
+                </VehResRQCore>
+            </OTA_VehResRQ>";
+        // var_dump($jsonReq);
+       
         // Initialize cURL session
         $ch = curl_init();
 
@@ -169,26 +146,78 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/xml',
-            'Content-Length: ' . strlen($myxml)
+            'Content-Length: ' . strlen($xml)
         ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $myxml);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         // Execute cURL request and get the response
         $response = curl_exec($ch);
-
-        // Check for cURL errors
         if ($response === false) {
             $error = curl_error($ch);
             curl_close($ch);
             die('cURL Error: ' . $error);
-        }
+        }else{
+            $xmlres = new SimpleXMLElement($response);
 
-        // Close cURL session
-        curl_close($ch);     
-        var_dump($response);
+            // Check if the <Success> tag exists
+            if (isset($xmlres->Success)) {
+                // If <Success> tag is present, print a success message
+                echo "Success! The vehicle reservation was processed successfully.";
+                // Retrieve and print the name
+                $givenName = $xmlres->VehResRSCore->VehReservation->Customer->Primary->PersonName->GivenName;
+                $surname = $xmlres->VehResRSCore->VehReservation->Customer->Primary->PersonName->Surname;
+
+                // Retrieve and print the ConfID
+                $confID = $xmlres->VehResRSCore->VehReservation->VehSegmentCore->ConfID['ID'];
+
+                // Retrieve and print the car name
+                $carName = $xmlres->VehResRSCore->VehReservation->VehSegmentCore->Vehicle->VehMakeModel['Name'];
+
+                // Create an instance of PHPMailer
+                $mail = new PHPMailer(true);
+
+                try {
+                    // Server settings
+                    $mail->isSMTP();                                 // Set mailer to use SMTP
+                    $mail->Host       = 'smtp.gmail.com';          // Specify main and backup SMTP servers
+                    $mail->SMTPAuth   = true;                        // Enable SMTP authentication
+                    $mail->Username   = 'dhokekiran98@gmail.com';    // SMTP username
+                    $mail->Password   = 'fzepmsgxliiticxs';       // SMTP password
+                    $mail->SMTPSecure = 'tls';                        // Enable TLS encryption, `ssl` also accepted
+                    $mail->Port       = 587;                         // TCP port to connect to
+
+                    // Recipients
+                    $mail->setFrom("dhokekiran98@gmail.com", "Hertz_Support");
+                    $mail->addAddress($email, $first_name . " " .  $last_name);
+
+                    // Content
+                    $mail->isHTML(true);                            // Set email format to HTML
+                    $mail->Subject = "Confirmation from hertz : $confID";
+                    $mail->Body    = "Passengers given name : $givenName <br> Passengers surname : $surname <br> Car booked : $carName";
+                    $mail->AltBody = '';
+
+                    if($mail->send()){
+                        echo "<script>window.location.href='sucess.php'</script>";
+                    }
+                    // echo 'Message has been sent';
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
+            } else {
+                // If <Success> tag is not present, print a failure message
+                echo "Failed to process the vehicle reservation.";
+            }
+            // Check for cURL errors
+            
+
+            // Close cURL session
+            curl_close($ch);     
+            var_dump($response);
+        }
+        
 }
 ?>
 
@@ -247,23 +276,23 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                             <input type="tel" class="form-control" id="mobileNumber" name="mobile_number" placeholder="Mobile Number" required>
                         </div>
                     </div>
-                </div>
-
-                <!-- <div class="additional-info">
-                    <div class="header">
-                        <a href="#collapseAdditionalInfo" data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdditionalInfo" class="d-block text-dark">
-                            Additional Information
-                        </a>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="Address">Address:</label>
+                            <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="City">City:</label>
+                            <input type="text" class="form-control" id="City" name="City" placeholder="City" required>
+                        </div>
                     </div>
-                    <div id="collapseAdditionalInfo" class="collapse">
-                         Add additional fields here if necessary -->
-                    <!-- </div>
-                    <div class="terms">
-                        'Total' does not include any additional items you may select at the location or any costs arising from the rental (such as damage, fuel or road traffic charges, & local insurance). For renters under the age of 25, additional charges may apply, and are payable at the location.
-                        <br><br>
-                        By clicking on the "Submit" button, you confirm that you understand and accept our <a href="#">Rental Qualification and Requirements</a>, <a href="#">Terms and Conditions</a>.
-                    </div> -->
-                <!-- </div> --> 
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="State">State:</label>
+                            <input type="text" class="form-control" id="State" name="State" placeholder="State" required>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="submit-btn">
                     <button type="submit" class="btn btn-warning btn-lg">Submit</button>
