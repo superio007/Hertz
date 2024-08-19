@@ -1,12 +1,77 @@
 <?php
 // Load the XML file
 $xml = "
-
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<OTA_VehRetResRS xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.opentravel.org/OTA/2003/05\" Target=\"Test\" Version=\"1.008\">
+    <Success/>
+    <Warnings>
+        <Warning Type=\"1\" ShortText=\"TOLL CHARGE APPLIES\" RecordID=\"510\"/>
+        <Warning Type=\"1\" ShortText=\"CREDIT CARD SURCHARGE OF 1.35% APPLIES TO QUALIFYING RENTALS\" RecordID=\"766\"/>
+        <Warning Type=\"1\" ShortText=\"A BOND MAY APPLY.\" RecordID=\"767\"/>
+    </Warnings>
+    <VehRetResRSCore>
+        <VehReservation>
+            <Customer>
+                <Primary>
+                    <PersonName>
+                        <Surname>DHOKE KIRAN</Surname>
+                    </PersonName>
+                </Primary>
+            </Customer>
+            <VehSegmentCore>
+                <ConfID Type=\"14\" ID=\"K952B2623E9\"/>
+                <Vendor Code=\"ZE\"/>
+                <VehRentalCore PickUpDateTime=\"2024-08-18T16:30:00-06:00\" ReturnDateTime=\"2024-08-19T21:30:00-06:00\">
+                    <PickUpLocation ExtendedLocationCode=\"MELT50\" LocationCode=\"MEL\" CodeContext=\"IATA\"/>
+                    <ReturnLocation ExtendedLocationCode=\"MELT50\" LocationCode=\"MEL\" CodeContext=\"IATA\"/>
+                </VehRentalCore>
+                <Vehicle PassengerQuantity=\"4\" BaggageQuantity=\"2\" AirConditionInd=\"true\" TransmissionType=\"Automatic\" FuelType=\"Unspecified\" DriveType=\"Unspecified\" Code=\"CDAR\" CodeContext=\"SIPP\">
+                    <VehType VehicleCategory=\"1\" DoorCount=\"4\"/>
+                    <VehClass Size=\"4\"/>
+                    <VehMakeModel Name=\"H HYUNDAI I30 OR SIMILAR\" Code=\"CDAR\"/>
+                    <PictureURL>ZEAUCDAR999.jpg</PictureURL>
+                </Vehicle>
+                <RentalRate>
+                    <RateDistance Unlimited=\"true\" DistUnitName=\"Km\" VehiclePeriodUnitName=\"RentalPeriod\"/>
+                    <VehicleCharges>
+                        <VehicleCharge Purpose=\"1\" TaxInclusive=\"false\" GuaranteedInd=\"true\" Amount=\"111.60\" CurrencyCode=\"AUD\" IncludedInRate=\"false\">
+                            <TaxAmounts>
+                                <TaxAmount Total=\"17.37\" CurrencyCode=\"AUD\" Percentage=\"10.00\" Description=\"Tax\"/>
+                            </TaxAmounts>
+                            <Calculation UnitCharge=\"55.80\" UnitName=\"Day\" Quantity=\"2\"/>
+                        </VehicleCharge>
+                    </VehicleCharges>
+                    <RateQualifier ArriveByFlight=\"false\" RateCategory=\"3\" RateQualifier=\"E02NSG\"/>
+                </RentalRate>
+                <Fees>
+                    <Fee Purpose=\"5\" TaxInclusive=\"false\" Description=\"LOCATION FEE:\" Amount=\"41.15\" CurrencyCode=\"AUD\"/>
+                    <Fee Purpose=\"5\" TaxInclusive=\"false\" Description=\"ADMN RECOVERY:\" Amount=\"3.91\" CurrencyCode=\"AUD\"/>
+                    <Fee Purpose=\"5\" TaxInclusive=\"false\" Description=\"VEHICLE REGISTRATION RECOVERY:\" Amount=\"17.00\" CurrencyCode=\"AUD\"/>
+                </Fees>
+                <TotalCharge RateTotalAmount=\"111.60\" EstimatedTotalAmount=\"191.03\" CurrencyCode=\"AUD\"/>
+            </VehSegmentCore>
+            <VehSegmentInfo>
+                <PricedCoverages>
+                    <PricedCoverage Required=\"false\">
+                        <Coverage CoverageType=\"24\"/>
+                        <Charge TaxInclusive=\"false\" IncludedInRate=\"false\" CurrencyCode=\"AUD\">
+                            <Calculation UnitCharge=\"40.91\" UnitName=\"Day\" Quantity=\"1\"/>
+                        </Charge>
+                    </PricedCoverage>
+                    <PricedCoverage Required=\"false\">
+                        <Coverage CoverageType=\"56\"/>
+                        <Charge TaxInclusive=\"false\" IncludedInRate=\"false\" CurrencyCode=\"AUD\">
+                            <Calculation UnitCharge=\"40.91\" UnitName=\"Day\" Quantity=\"1\"/>
+                        </Charge>
+                    </PricedCoverage>
+                </PricedCoverages>
+            </VehSegmentInfo>
+        </VehReservation>
+    </VehRetResRSCore>
+</OTA_VehRetResRS>
 ";
 
-// Convert XML to JSON and then to PHP array
-$json = json_encode($xml);
-$data = json_decode($json, true);
+
 
 // Extract data from the array
 $warnings = $data['Warnings']['Warning'] ?? [];
