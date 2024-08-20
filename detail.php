@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Reservation Details</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" media="print">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,87 +33,80 @@
 </head>
 <body>
     <?php
-    $xmlString = <<<XML
+    // API endpoint URL
+    $apiUrl = 'https://vv.xqual.hertz.com/DirectLinkWEB/handlers/DirectLinkHandler?id=ota2007a'; // Replace with your actual API endpoint
+    $confId = $_GET['cnfNo'];
+    $surname = $_GET['lName'];
+    // XML request data
+    $xmlRequest = <<<XML
     <?xml version="1.0" encoding="UTF-8"?>
-    <OTA_VehRetResRS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentravel.org/OTA/2003/05" Target="Test" Version="1.008">
-        <Success/>
-        <Warnings>
-            <Warning Type="1" ShortText="TOLL CHARGE APPLIES" RecordID="510"/>
-            <Warning Type="1" ShortText="CREDIT CARD SURCHARGE OF 1.35% APPLIES TO QUALIFYING RENTALS" RecordID="766"/>
-            <Warning Type="1" ShortText="A BOND MAY APPLY." RecordID="767"/>
-        </Warnings>
-        <VehRetResRSCore>
-            <VehReservation>
-                <Customer>
-                    <Primary>
-                        <PersonName>
-                            <Surname>DHOKE KIRAN</Surname>
-                        </PersonName>
-                    </Primary>
-                </Customer>
-                <VehSegmentCore>
-                    <ConfID Type="14" ID="K952B2623E9"/>
-                    <Vendor Code="ZE"/>
-                    <VehRentalCore PickUpDateTime="2024-08-18T16:30:00-06:00" ReturnDateTime="2024-08-19T21:30:00-06:00">
-                        <PickUpLocation ExtendedLocationCode="MELT50" LocationCode="MEL" CodeContext="IATA"/>
-                        <ReturnLocation ExtendedLocationCode="MELT50" LocationCode="MEL" CodeContext="IATA"/>
-                    </VehRentalCore>
-                    <Vehicle PassengerQuantity="4" BaggageQuantity="2" AirConditionInd="true" TransmissionType="Automatic" FuelType="Unspecified" DriveType="Unspecified" Code="CDAR" CodeContext="SIPP">
-                        <VehType VehicleCategory="1" DoorCount="4"/>
-                        <VehClass Size="4"/>
-                        <VehMakeModel Name="H HYUNDAI I30 OR SIMILAR" Code="CDAR"/>
-                        <PictureURL>ZEAUCDAR999.jpg</PictureURL>
-                    </Vehicle>
-                    <RentalRate>
-                        <RateDistance Unlimited="true" DistUnitName="Km" VehiclePeriodUnitName="RentalPeriod"/>
-                        <VehicleCharges>
-                            <VehicleCharge Purpose="1" TaxInclusive="false" GuaranteedInd="true" Amount="111.60" CurrencyCode="AUD" IncludedInRate="false">
-                                <TaxAmounts>
-                                    <TaxAmount Total="17.37" CurrencyCode="AUD" Percentage="10.00" Description="Tax"/>
-                                </TaxAmounts>
-                                <Calculation UnitCharge="55.80" UnitName="Day" Quantity="2"/>
-                            </VehicleCharge>
-                        </VehicleCharges>
-                        <RateQualifier ArriveByFlight="false" RateCategory="3" RateQualifier="E02NSG"/>
-                    </RentalRate>
-                    <Fees>
-                        <Fee Purpose="5" TaxInclusive="false" Description="LOCATION FEE:" Amount="41.15" CurrencyCode="AUD"/>
-                        <Fee Purpose="5" TaxInclusive="false" Description="ADMN RECOVERY:" Amount="3.91" CurrencyCode="AUD"/>
-                        <Fee Purpose="5" TaxInclusive="false" Description="VEHICLE REGISTRATION RECOVERY:" Amount="17.00" CurrencyCode="AUD"/>
-                    </Fees>
-                    <TotalCharge RateTotalAmount="111.60" EstimatedTotalAmount="191.03" CurrencyCode="AUD"/>
-                </VehSegmentCore>
-                <VehSegmentInfo>
-                    <PricedCoverages>
-                        <PricedCoverage Required="false">
-                            <Coverage CoverageType="24"/>
-                            <Charge TaxInclusive="false" IncludedInRate="false" CurrencyCode="AUD">
-                                <Calculation UnitCharge="40.91" UnitName="Day" Quantity="1"/>
-                            </Charge>
-                        </PricedCoverage>
-                        <PricedCoverage Required="false">
-                            <Coverage CoverageType="56"/>
-                            <Charge TaxInclusive="false" IncludedInRate="false" CurrencyCode="AUD">
-                                <Calculation UnitCharge="40.91" UnitName="Day" Quantity="1"/>
-                            </Charge>
-                        </PricedCoverage>
-                    </PricedCoverages>
-                </VehSegmentInfo>
-            </VehReservation>
-        </VehRetResRSCore>
-    </OTA_VehRetResRS>
+    <OTA_VehRetResRQ xmlns="http://www.opentravel.org/OTA/2003/05" Version="2.007">
+        <POS>
+            <Source ISOCountry="IN" AgentDutyCode="T17R16L5D11">
+                <RequestorID Type="4" ID="X975">
+                    <CompanyName Code="CP" CodeContext="4PH5"/>
+                </RequestorID>
+            </Source>
+        </POS>
+        <VehRetResRQCore>
+            <UniqueID Type="14" ID="$confId"/> <!-- Confirmation ID -->
+            <PersonName>
+                <Surname>$surname</Surname> <!-- Customer's Last Name -->
+            </PersonName>
+        </VehRetResRQCore>
+    </OTA_VehRetResRQ>
     XML;
-    $xml = simplexml_load_string($xmlString);
+    
+    // Initialize cURL
+    $ch = curl_init($apiUrl);
+    
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/xml',  // Set the request content type to XML
+        'Content-Length: ' . strlen($xmlRequest)
+    ]);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlRequest);
+    
+    // Execute the cURL request and capture the response
+    $response = curl_exec($ch);
+    
+    $xml = simplexml_load_string($response);
+    curl_close($ch);
+    function separateAndConvertDateTime($dateTime) {
+        // Split the string at "T" to separate date and time
+        list($date, $timeWithOffset) = explode("T", $dateTime);
+        
+        // Split the time to remove the timezone offset
+        $time24Hour = explode("-", $timeWithOffset)[0]; // Removes the timezone part
+        
+        // Convert the time to 12-hour format
+        $dateTimeObj = DateTime::createFromFormat('H:i:s', $time24Hour);
+        $time12Hour = $dateTimeObj->format('h:i:s A');
+        
+        // Return date and converted time
+        return [
+            'date' => $date,
+            'time' => $time12Hour
+        ];
+    }
+    $pickDateTime = $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore['PickUpDateTime'];
+    $dropDateTime = $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore['ReturnDateTime'];
+
+    $pickDate = separateAndConvertDateTime($pickDateTime);
+    $dropDate = separateAndConvertDateTime($dropDateTime);
     ?>
     <div class="container">
         <h1 class="text-center m-4">Vehicle Reservation Details</h1>
 
         <div class="section">
             <h2 class="bg-warning text-primary p-2">Reservation Information</h2>
-            <p><strong>Confirmation ID:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->ConfID['ID'];?></p>
             <p><strong>Vendor Code:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vendor['Code']; ?></p>
-            <p><strong>Pick-Up Date and Time:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore['PickUpDateTime'];?></p>
-            <p><strong>Return Date and Time:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore['ReturnDateTime'];?></p>
+            <p><strong>Pick-Up Date</strong> <?php echo $pickDate['date'];?></p>
+            <p><strong>Pick-Up Time</strong> <?php echo $pickDate['time'];?></p>
+            <p><strong>Return Date</strong> <?php echo $dropDate['date'];?></p>
+            <p><strong>Return Time</strong> <?php echo $dropDate['time'];?></p>
             <p><strong>Pick-Up Location:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore->PickUpLocation['LocationCode'];?></p>
             <p><strong>Return Location:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->VehRentalCore->ReturnLocation['LocationCode'];?></p>
         </div>
@@ -144,6 +138,14 @@
                     </ul>
                 </div>
             <?php endforeach; ?>
+        </div>
+        <div class="d-flex justify-content-center gap-5 mt-3">
+            <button onclick="window.location.href='index.php';" class="btn bg-warning text-primary">
+                Go Back To Homepage
+            </button>
+            <button onclick="window.print()" class="btn bg-primary text-warning">
+                Download Now
+            </button>
         </div>
     </div>
 </body>

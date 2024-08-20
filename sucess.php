@@ -28,10 +28,16 @@
     unset($_SESSION['dataarray']);
     unset($_SESSION['results']);
     session_destroy();
+    if(isset($_GET['cnfNo'])){
+        $cnfNo = $_GET['cnfNo'];
+    }
+    if(isset($_GET['lName'])){
+        $lName = $_GET['lName'];
+    }
     ?>
     <div class="d-flex justify-content-center align-items-center" style="height:100vh">
         <div class="text-center">
-            <h1>Thanks for with us!</h1>
+            <h1>Thank you for booking with us!</h1>
             <p class="m-0">you will get confirmation on mail.</p>
             <p class="m-0">We will redirecting you please wait or <a class="text-decoration-none text-capitalize" href="index.php">Click here</a></p>
             <div id="spinner">
@@ -43,8 +49,10 @@
     </div>
 </body>
 <script>
+    let lName = "<?php echo $lName; ?>"
+    let cnfNo = "<?php echo $cnfNo; ?>"
     function redirect(){
-        window.location.href = "index.php";
+        window.location.href = `detail.php?cnfNo=${cnfNo}&lName=${lName}`;
     }
     setTimeout(redirect,2000);
 </script>

@@ -71,112 +71,93 @@ session_start();
                 $pickUpDateTime = $convertedPickDate . 'T' . $formatPickTime;
                 $dropOffDateTime = $convertedDropDate . 'T' . $formatDropTime;
 
-                //convert xml to json
-                function arrayToXml($data, &$xmlData) {
-                    foreach($data as $key => $value) {
-                        if (is_array($value)) {
-                            if (is_numeric($key)) {
-                                $key = 'item' . $key; // dealing with <0/>..<n/> issues
-                            }
-                            $subnode = $xmlData->addChild($key);
-                            arrayToXml($value, $subnode);
-                        } else {
-                            $xmlData->addChild("$key", htmlspecialchars("$value"));
-                        }
+                if($dropType == "Same Drop-off Location"){
+                    $xmlRequest = <<<XML
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" Version="1.008">
+                            <POS>
+                                <Source ISOCountry="AU" AgentDutyCode="T17R16L5D11">
+                                    <RequestorID Type="4" ID="X975">
+                                        <CompanyName Code="CP" CodeContext="4PH5"></CompanyName>
+                                    </RequestorID>
+                                </Source>
+                            </POS>
+                            <VehAvailRQCore>
+                                <VehRentalCore PickUpDateTime="$pickUpDateTime" ReturnDateTime="$dropOffDateTime">
+                                    <PickUpLocation LocationCode="$Pickup" Type="IATA"></PickUpLocation>
+                                </VehRentalCore>
+                            </VehAvailRQCore>
+                        </OTA_VehAvailRateRQ>
+                        XML;
+                } elseif ($dropType == "Different Drop-off Location") {
+                    $xmlRequest = <<<XML
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <OTA_VehAvailRateRQ xmlns="http://www.opentravel.org/OTA/2003/05" Version="1.008">
+                            <POS>
+                                <Source ISOCountry="AU" AgentDutyCode="T17R16L5D11">
+                                    <RequestorID Type="4" ID="X975">
+                                        <CompanyName Code="CP" CodeContext="4PH5"></CompanyName>
+                                    </RequestorID>
+                                </Source>
+                            </POS>
+                            <VehAvailRQCore>
+                                <VehRentalCore PickUpDateTime="$pickUpDateTime" ReturnDateTime="$dropOffDateTime">
+                                    <PickUpLocation LocationCode="$Pickup" Type="IATA"></PickUpLocation>
+                                    <ReturnLocation LocationCode="$Drop_off" Type="IATA"></ReturnLocation>
+                                </VehRentalCore>
+                            </VehAvailRQCore>
+                        </OTA_VehAvailRateRQ>
+                        XML;
+                }
+
+                // API endpoint URL
+                $apiUrl = 'https://vv.xqual.hertz.com/DirectLinkWEB/handlers/DirectLinkHandler?id=ota2007a';
+
+                // Initialize cURL
+                $ch = curl_init($apiUrl);
+
+                // Set cURL options
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/xml',
+                    'Content-Length: ' . strlen($xmlRequest)
+                ]);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlRequest);
+
+                // Execute the cURL request and capture the response
+                $response = curl_exec($ch);
+                var_dump($response);
+
+                // Check for errors
+                if (curl_errno($ch)) {
+                    echo 'cURL Error: ' . curl_error($ch);
+                } else {
+                    // Handle the response
+                    if (strlen($response) > 500) {
+                        $_SESSION['results'] = $response;
+                        $dataarray = [
+                            'pickUpDateTime' => $pickUpDateTime,
+                            'dropOffDateTime' => $dropOffDateTime,
+                            'pickLocation' => $Pickup,
+                            'dropLocation' => $Drop_off,
+                        ];
+                        $_SESSION['dataarray'] = $dataarray;
+                        echo "<script>window.location.href = 'result.php';</script>";
+                    } else {
+                        echo "<script>alert('Vehicles are not available')</script>";
                     }
                 }
 
-                if(($dropType == "Same Drop-off Location")){
-                    $xml = "
-                    <?xml version=\"1.0\" encoding=\"UTF-8\" ?>
-                        <OTA_VehAvailRateRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
-                            <POS>
-                                <Source ISOCountry=\"AU\" AgentDutyCode=\"T17R16L5D11\">
-                                    <RequestorID Type=\"4\" ID=\"X975\">
-                                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"></CompanyName>
-                                    </RequestorID>
-                                </Source>
-                            </POS>
-                            <VehAvailRQCore>
-                                <VehRentalCore PickUpDateTime=\"$pickUpDateTime\" ReturnDateTime=\"$dropOffDateTime\">
-                                    <PickUpLocation LocationCode=\"$Pickup\" Type=\"IATA\"></PickUpLocation>
-                                </VehRentalCore>
-                            </VehAvailRQCore>
-                        </OTA_VehAvailRateRQ>";
-                }elseif(($dropType == "Different Drop-off Location")){
-                    $xml = "
-                    <?xml version=\"1.0\" encoding=\"UTF-8\" ?>
-                        <OTA_VehAvailRateRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
-                            <POS>
-                                <Source ISOCountry=\"AU\" AgentDutyCode=\"T17R16L5D11\">
-                                    <RequestorID Type=\"4\" ID=\"X975\">
-                                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"></CompanyName>
-                                    </RequestorID>
-                                </Source>
-                            </POS>
-                            <VehAvailRQCore>
-                                <VehRentalCore PickUpDateTime=\"$pickUpDateTime\" ReturnDateTime=\"$dropOffDateTime\">
-                                    <PickUpLocation LocationCode=\"$Pickup\" Type=\"IATA\"></PickUpLocation>
-                                    <ReturnLocation LocationCode=\"$Drop_off\" Type=\"IATA\"></ReturnLocation>
-                                </VehRentalCore>
-                            </VehAvailRQCore>
-                        </OTA_VehAvailRateRQ>";
-                }
-
-                // Initialize cURL session
-                $ch = curl_init();
-
-                // Set cURL options
-                curl_setopt($ch, CURLOPT_URL, "https://vv.xqual.hertz.com/DirectLinkWEB/handlers/DirectLinkHandler?id=ota2007a");
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/xml',
-                    'Content-Length: ' . strlen($xml)
-                ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-                // Execute cURL request and get the response
-                $response = curl_exec($ch);
-
-                // Check for cURL errors
-                if ($response === false) {
-                    $error = curl_error($ch);
-                    curl_close($ch);
-                    die('cURL Error: ' . $error);
-                }
-
-                // Close cURL session
+                // Close cURL resource
                 curl_close($ch);
-
-                // Handle the response (for now, let's just var_dump it)
-                if(strlen($response)>500){
-                    $_SESSION['results'] = $response;
-                    $dataarray = [
-                        'pickUpDateTime' => $pickUpDateTime,
-                        'dropOffDateTime' => $dropOffDateTime,
-                        'pickLocation' => $Pickup,
-                        'dropLocation' => $Drop_off,
-                    ];
-                    $_SESSION['dataarray'] = $dataarray;
-                    echo "<script>window.location.href = 'result.php';</script>";
-                }else{
-                    echo "<script>alert(\"vechicles are not available\")</script>";
-                }
-                
             }
+
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['dicountBtn'])) {
                 $Club_Code = $_POST['Club_Code'];
                 $Promotional_Coupon = $_POST['Promotional_Coupon'];
                 $Rate_Code = $_POST['Rate_Code'];
-                $code = $Club_Code . " " . "applied" ;
-                // Echo statements for the cancel widget
-                // echo "<h2>Discount Widget</h2>";
-                // echo "<p>Club_Code: $Club_Code</p>";
-                // echo "<p>Promotional_Coupon: $Promotional_Coupon</p>";
-                // echo "<p>Rate_Code: $Rate_Code</p>";
+                $code = $Club_Code . " " . "applied";
             }
         ?>
         <div class="container">
@@ -253,7 +234,7 @@ session_start();
                             </div>
                         </div>
                         <div class="col-1 d-flex">
-                            <button name="search_btn" class="btn bg-warning">View Vechicles</button>
+                            <button name="search_btn" class="btn bg-warning">View Vehicles</button>
                         </div>
                     </div>
                 </form>

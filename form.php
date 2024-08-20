@@ -196,11 +196,14 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
                     $mail->Subject = "Confirmation from hertz : $confID";
-                    $mail->Body    = "Passengers given name : $givenName <br> Passengers surname : $surname <br> Car booked : $carName";
+                    $mail->Body    = "Passengers given name : $givenName <br> Passengers surname : $surname <br> Car booked : $carName <br> Check details : 
+                    <a href='detail.php?confId=$confID&surname=$surname' 
+                      style='background-color: #ffd207; color:#0d7fa6; padding: 5px; text-decoration: none; border-radius: 5px;'>Click Here</a>
+                    ";
                     $mail->AltBody = '';
 
                     if($mail->send()){
-                        echo "<script>window.location.href='sucess.php'</script>";
+                        echo "<script>window.location.href='sucess.php?cnfNo=$confID&lName=$surname'</script>";
                     }
                     // echo 'Message has been sent';
                 } catch (Exception $e) {

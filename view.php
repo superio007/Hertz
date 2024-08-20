@@ -31,7 +31,7 @@
             $view_confirmNo = $_POST['view_confirmNo'];
             $view_Lname = $_POST['view_Lname'];
         
-            echo "<script>window.location.href=\"index.html?cnfNo=$view_confirmNo&lName=$view_Lname\"</script>";
+            echo "<script>window.location.href=\"detail.php?cnfNo=$view_confirmNo&lName=$view_Lname\"</script>";
         }
     ?>
 <div class="container">
