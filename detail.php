@@ -126,7 +126,7 @@
             <h2 class="bg-warning text-primary p-2">Vehicle Details</h2>
             <img src="<?php echo 'https://images.hertz.com/vehicles/220x128/' . $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle->PictureURL;?>" alt="Vehicle Image" class="vehicle-img">
             <p><strong>Vehicle Code:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle->VehMakeModel['Code'] ;?></p>
-            <p><strong>Passenger Quantity:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle['PassengerQuantity'] ;?></p>
+            <p><strong>Passenger Quantity:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle['PassengerQuantity'] ;?></p>  
             <p><strong>Baggage Quantity:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle['BaggageQuantity'] ;?></p>
             <p><strong>Air Conditioning:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle['AirConditionInd'] ;?></p>
             <p><strong>Transmission Type:</strong> <?php echo $xml->VehRetResRSCore->VehReservation->VehSegmentCore->Vehicle['TransmissionType'] ;?></p>
