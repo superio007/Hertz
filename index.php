@@ -130,7 +130,7 @@ error_reporting(E_ALL);
 
                 // Execute the cURL request and capture the response
                 $response = curl_exec($ch);
-                var_dump($response);
+                // var_dump($response);
 
                 // Check for errors
                 if (curl_errno($ch)) {
