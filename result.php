@@ -174,14 +174,14 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
                     <div class="col-6">
                         <h2 style="font-size: 28px;font-weight: 300;">Showing All Vehicle Results</h2>
                     </div>
-                    <div class="col-6 align-items-baseline d-flex justify-content-end gap-2">
+                    <!-- <div class="col-6 align-items-baseline d-flex justify-content-end gap-2">
                         <p class="instruct-p">
                             Sort Vehicle By :
                         </p>
                         <p>
                             <a href="#" class="instruct-p">Price</a> | <a href="#" class="instruct-p">Size</a>
                         </p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-8">
                     <p><a href="#" class="instruct-p">Credit Card Surcharge</a>:</p>
