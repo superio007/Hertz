@@ -27,6 +27,7 @@
     session_start();
     unset($_SESSION['dataarray']);
     unset($_SESSION['results']);
+    unset($_SESSION['userInfo']);
     session_destroy();
     if(isset($_GET['cnfNo'])){
         $cnfNo = $_GET['cnfNo'];
