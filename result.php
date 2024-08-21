@@ -2,7 +2,37 @@
 session_start();
 $results = $_SESSION['results'];
 $dataarray = $_SESSION['dataarray'];
+$pickUp = $dataarray['pickLocation'];
+require "dbconn.php";
 
+// Prepare the SQL query with a placeholder for the city code
+$sql = $conn->prepare("SELECT * FROM `airport_list` WHERE citycode = ?");
+
+// Bind the $pickUp variable to the query as a string
+$sql->bind_param("s", $pickUp);
+
+// Execute the query
+$sql->execute();
+
+// Get the result
+$result = $sql->get_result();
+
+// Fetch the city from the result
+if ($row = $result->fetch_assoc()) {
+    // echo $row['city'];  // Output the city
+} 
+
+// Close the connection
+$conn->close();
+function formatDate($dateString) {
+    // Create a DateTime object from the given string
+    $date = new DateTime($dateString);
+
+    // Format the date into the desired format
+    return $date->format('D, d M, Y \a\t H:i');
+}
+$pickDate = formatDate($dataarray['pickUpDateTime']);
+$dropDate = formatDate($dataarray['dropOffDateTime']);
 function xmlToJson($xmlString)
 {
     // Load the XML string into a SimpleXMLElement object
@@ -93,15 +123,15 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
             <div class="col-6 d-flex align-items-center">
                 <div class="col-4">
                     <p class="text-white">Pick-up Location</p>
-                    <p class="text-white">Melbroune Airport</p>
+                    <p class="text-white"><?php echo $row['city'] . ' ' . $row['airpotname']; ?></p>
                 </div>
                 <div class="col-4">
                     <p class="text-white">Pick-up Time</p>
-                    <p class="text-white">Mon, 19 Aug, 2024 at 01:00</p>
+                    <p class="text-white"><?php echo $pickDate;?></p>
                 </div>
                 <div class="col-4">
                     <p class="text-white">Drop-off Time</p>
-                    <p class="text-white">Tue, 20 Aug, 2024 at 01:00</p>
+                    <p class="text-white"><?php echo $dropDate;?></p>
                 </div>
             </div>
             <div class="col-6 d-flex align-items-center justify-content-end gap-2">
@@ -144,14 +174,14 @@ $vehAvails = $data['VehAvailRSCore']['VehVendorAvails']['VehVendorAvail']['VehAv
                     <div class="col-6">
                         <h2 style="font-size: 28px;font-weight: 300;">Showing All Vehicle Results</h2>
                     </div>
-                    <div class="col-6 align-items-baseline d-flex justify-content-end gap-2">
+                    <!-- <div class="col-6 align-items-baseline d-flex justify-content-end gap-2">
                         <p class="instruct-p">
                             Sort Vehicle By :
                         </p>
                         <p>
                             <a href="#" class="instruct-p">Price</a> | <a href="#" class="instruct-p">Size</a>
                         </p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-8">
                     <p><a href="#" class="instruct-p">Credit Card Surcharge</a>:</p>
