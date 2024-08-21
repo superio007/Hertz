@@ -88,54 +88,65 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $email = $_POST['email'];
     $mobile_country_code = $_POST['mobile_country_code'];
     $mobile_number = $_POST['mobile_number'];
-        $pickupLocation = $dataarray['pickLocation'];
-        $returnLocation = $dataarray['dropLocation'] ?? $dataarray['pickLocation'];
-        $pickupDateTime =  $dataarray['pickUpDateTime'];
-        $returnDateTime = $dataarray['dropOffDateTime'];
-        $givenName = $first_name;
-        $surname = $last_name;
-        $email = $email;
-        $address = $_POST['Address'];
-        $city = $_POST['City'];
-        $stateCode = $_POST['State'];
-        $countryCode = $mobile_country_code;
-        $voucher = "12345678";
-        $xml = "
-            <OTA_VehResRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
-                <POS>
-                    <Source ISOCountry=\"IN\" AgentDutyCode=\"T17R16L5D11\">
-                        <RequestorID Type=\"4\" ID=\"X975\">
-                            <CompanyName Code=\"CP\" CodeContext=\"4PH5\"/>
-                        </RequestorID>
-                    </Source>
-                </POS>
-                <VehResRQCore>
-                    <VehRentalCore PickUpDateTime=\"$pickupDateTime\" ReturnDateTime=\"$returnDateTime\">
-                        <PickUpLocation LocationCode=\"$pickupLocation\" CodeContext=\"IATA\"/>
-                        <ReturnLocation LocationCode=\"$returnLocation\" CodeContext=\"IATA\"/>
-                    </VehRentalCore>
-                    <Customer>
-                        <Primary>
-                            <PersonName>
-                                <GivenName>$givenName</GivenName>
-                                <Surname>$surname</Surname>
-                            </PersonName>
-                            <Email>$email</Email>
-                            <Address>
-                                <AddressLine>$address</AddressLine>
-                                <CityName>$city</CityName>
-                                <StateProv StateCode=\"$stateCode\"/>
-                                <CountryName Code=\"$countryCode\"/>
-                            </Address>
-                        </Primary>
-                    </Customer>
-                    <VendorPref Code=\"ZE\"/>
-                    <VehPref Code=\"CDAR\" CodeContext=\"SIPP\"/>
-                    <RentalPaymentPref>
-                        <Voucher Identifier=\"$voucher\" IdentifierContext=\"TestVoucher\"/>
-                    </RentalPaymentPref>
-                </VehResRQCore>
-            </OTA_VehResRQ>";
+    $pickupLocation = $dataarray['pickLocation'];
+    $returnLocation = $dataarray['dropLocation'] ?? $dataarray['pickLocation'];
+    $pickupDateTime =  $dataarray['pickUpDateTime'];
+    $returnDateTime = $dataarray['dropOffDateTime'];
+    $address = $_POST['Address'];
+    $city = $_POST['City'];
+    $stateCode = $_POST['State'];
+    $voucher = "12345678";
+    $usersInfo = [
+        'fName' => $first_name,
+        'lName' => $last_name,
+        'email' => $email,
+        'countryCode' => $mobile_country_code,
+        'mobileNo' => $mobile_number,
+        'address' => $address,
+        'city' => $city,
+        'state' => $stateCode,
+        'pickDate' => $pickupDateTime,
+        'dropDate' => $returnDateTime,
+        'pick'=> $pickupLocation,
+        'drop' => $returnLocation,
+    ];
+    $_SESSION['userInfo'] = $usersInfo;
+    $xml = "
+        <OTA_VehResRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"1.008\">
+            <POS>
+                <Source ISOCountry=\"IN\" AgentDutyCode=\"T17R16L5D11\">
+                    <RequestorID Type=\"4\" ID=\"X975\">
+                        <CompanyName Code=\"CP\" CodeContext=\"4PH5\"/>
+                    </RequestorID>
+                </Source>
+            </POS>
+            <VehResRQCore>
+                <VehRentalCore PickUpDateTime=\"$pickupDateTime\" ReturnDateTime=\"$returnDateTime\">
+                    <PickUpLocation LocationCode=\"$pickupLocation\" CodeContext=\"IATA\"/>
+                    <ReturnLocation LocationCode=\"$returnLocation\" CodeContext=\"IATA\"/>
+                </VehRentalCore>
+                <Customer>
+                    <Primary>
+                        <PersonName>
+                            <GivenName>$first_name</GivenName>
+                            <Surname>$last_name</Surname>
+                        </PersonName>
+                        <Email>$email</Email>
+                        <Address>
+                            <AddressLine>$address</AddressLine>
+                            <CityName>$city</CityName>
+                            <StateProv StateCode=\"$stateCode\"/>
+                            <CountryName Code=\"$mobile_country_code\"/>
+                        </Address>
+                    </Primary>
+                </Customer>
+                <VendorPref Code=\"ZE\"/>
+                <VehPref Code=\"CDAR\" CodeContext=\"SIPP\"/>
+                <RentalPaymentPref>
+                    <Voucher Identifier=\"$voucher\" IdentifierContext=\"TestVoucher\"/>
+                </RentalPaymentPref>
+            </VehResRQCore>
+        </OTA_VehResRQ>";
         // var_dump($jsonReq);
        
         // Initialize cURL session

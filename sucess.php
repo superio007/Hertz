@@ -39,7 +39,7 @@
         <div class="text-center">
             <h1>Thank you for booking with us!</h1>
             <p class="m-0">you will get confirmation on mail.</p>
-            <p class="m-0">We will redirecting you please wait or <a class="text-decoration-none text-capitalize" href="index.php">Click here</a></p>
+            <p class="m-0">We will redirecting you please wait or <a class="text-decoration-none text-capitalize" href="detail.php?cnfNo=<?php echo $cnfNo ;?>&lName=<?php echo $lName ;?>">Click here</a></p>
             <div id="spinner">
                 <div class="spinner-border" role="status" >
                     <span class="visually-hidden">Loading...</span>

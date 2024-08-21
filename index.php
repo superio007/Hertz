@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +33,9 @@ session_start();
     </head>
     <body>
         <?php
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
+            require 'dbconn.php';
+            $sql = "SELECT * FROM `airport_list`";
+            $result = $conn->query($sql);
             $code = "Add a Discount Code";
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['search_btn'])) {
                 // Capture form data
@@ -160,6 +163,11 @@ session_start();
                 $code = $Club_Code . " " . "applied";
             }
         ?>
+        <datalist id="airport_name">
+            <?php while($row = $result->fetch_assoc()):?>
+                <option value="<?php echo $row['citycode'];?>"><?php echo $row['city'] .' ' .  $row['airpotname'];?></option>
+            <?php endwhile;?>
+        </datalist>
         <div class="container">
             <h1 class="text-center">Rent a car!</h1>
             <div id="search-widget" class="api-widget p-3">
@@ -191,13 +199,13 @@ session_start();
                             <div class="input-div d-grid p-2">
                                 <label class="internal-label" for="Pick-up">Pick-up
                                 Location</label>
-                                <input type="text" class="input" id="Pick-up"
+                                <input type="text" list="airport_name" class="input" id="Pick-up"
                                     name="Pick-up" required>
                             </div>
                             <div id="drop-div" class="input-div d-grid p-2 d-none">
                                 <label class="internal-label" for="Drop_off">Drop off
                                 Location</label>
-                                <input type="text" class="input" id="Drop_off"
+                                <input type="text" list="airport_name" class="input" id="Drop_off"
                                     name="Drop_off">
                             </div>
                         </div>
